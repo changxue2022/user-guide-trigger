@@ -1,0 +1,4 @@
+ curl -H "Content-Type:application/json" -H "Authorization:Basic cm9vdDpyb2901" -X POST --data '{"timestamps":[1635232143960,1635232153960,1635232154960],"measurements":["s1","s2"],"dataTypes":["DOUBLE","DOUBLE"],"values":[[890,356,666],[9000,1200,3500]],"isAligned":false,"deviceId":"root.stateless.rest"}' http://172.20.70.44:18080/rest/v1/insertTablet
+ 
+ curl -H "Content-Type:application/json" -H "Authorization:Basic cm9vdDpyb2901" -X POST --data '{"timestamps":[1635232143960,1635232153960,1635232154960,1635232156960,1635232159960,1635232162960],"measurements":["s1","s2"],"dataTypes":["DOUBLE","float"],"values":[[890,56,666,345,109,45],[100,200,300,9000,1200,3500]],"isAligned":true,"deviceId":"root.stateful.rest"}' http://172.20.70.44:18080/rest/v1/insertTablet
+     

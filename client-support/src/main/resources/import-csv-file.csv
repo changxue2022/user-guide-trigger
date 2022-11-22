@@ -1,0 +1,6 @@
+Time,Device,s1,s2
+1000,root.stateful.import_csv,883,45
+2000,root.stateful.import_csv,345,105
+3000,root.stateful.import_csv,700.32,7000
+400,root.stateful.import_csv,102,30
+500,root.stateful.import_csv,133,456

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/client-support/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/client-support/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/double-value-monitor/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/double-value-monitor/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/multi-client-write-test/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/multi-client-write-test/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/multi-type-trigger/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/multi-type-trigger/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/stateful-test-for-http/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/stateful-test-for-http/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/stateful-test/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/stateful-test/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/strategy-test/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/strategy-test/src/main/resources" charset="UTF-8" />
+  </component>
+</project>
