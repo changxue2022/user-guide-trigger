@@ -33,6 +33,8 @@ public class StatefulTriggerTest implements Trigger {
     private String tsType;
     private String trigName;
     private String iotdbHost;
+    private String user;
+    private String password;
     private List<String> measuraments = new ArrayList<>(4);
     private List<TSDataType> tsDataTypes = new ArrayList<>(4);
     private List<Object> content = new ArrayList<>(4);
@@ -41,6 +43,8 @@ public class StatefulTriggerTest implements Trigger {
         if (session == null ) {
             session = new Session.Builder()
                     .host(iotdbHost)
+                    .username(user)
+                    .password(password)
                     .build();
             session.open(false);
         }
@@ -55,6 +59,12 @@ public class StatefulTriggerTest implements Trigger {
             this.iotdbHost = attributes.getString("HOST");
         } else {
             throw new RuntimeException("HOST is required");
+        }
+        if (attributes.hasAttribute("user")) {
+            this.user = attributes.getString("user");
+        }
+        if (attributes.hasAttribute("password")) {
+            this.password = attributes.getString("password");
         }
         LOGGER.info("############# "+this.trigName +" CREATE ############");
         this.measuraments.add("trig_name");

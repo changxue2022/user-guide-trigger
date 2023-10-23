@@ -13,6 +13,8 @@ public class MqttClients {
         mqtt.setHost("172.20.70.44", 1883);
         mqtt.setUserName("root");
         mqtt.setPassword("root");
+        mqtt.setConnectAttemptsMax(3);
+        mqtt.setReconnectDelay(10);
 
         BlockingConnection connection = mqtt.blockingConnection();
         connection.connect();
@@ -29,19 +31,8 @@ public class MqttClients {
                     "\"values\":[%f]\n" +
                     "}", alignedDevice, timstampBase+i, valueBase+i*5);
 
-            connection.publish(alignedDevice+".s1", payload.getBytes(), QoS.AT_LEAST_ONCE, false);
+            connection.publish(alignedDevice, payload.getBytes(), QoS.AT_LEAST_ONCE, false);
         }
-//        for (int i = 0; i < 5; i++) {
-//            String payload = String.format("{\n" +
-//                    "\"device\":\"%s\",\n" +
-//                    "\"timestamp\":%d,\n" +
-//                    "\"measurements\":[\"s1\"],\n" +
-//                    "\"values\":[%f]\n" +
-//                    "}", nonAlignedDevice, timstampBase+i*2, valueBase+i*6);
-//
-//            connection.publish(nonAlignedDevice+".s1", payload.getBytes(), QoS.AT_LEAST_ONCE, false);
-//        }
-
         connection.disconnect();
     }
 }

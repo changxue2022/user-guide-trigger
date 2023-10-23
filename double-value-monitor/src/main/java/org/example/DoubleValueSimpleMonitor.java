@@ -25,6 +25,8 @@ public class DoubleValueSimpleMonitor implements Trigger {
 
     private Session session;
     private String iotdbHost;
+    private String user = "root";
+    private String password = "root";
     private String targetDevice = "root.ln.alerting";
     private Double standardValue = 50.0;
 
@@ -36,6 +38,8 @@ public class DoubleValueSimpleMonitor implements Trigger {
         if (session == null ) {
             session = new Session.Builder()
                     .host(iotdbHost)
+                    .username(user)
+                    .password(password)
                     .build();
             session.open(false);
         }
@@ -53,6 +57,14 @@ public class DoubleValueSimpleMonitor implements Trigger {
             if (attributes.hasAttribute("standard_value")) {
                 this.standardValue = Double.parseDouble(attributes.getString("standard_value"));
             }
+
+            if (attributes.hasAttribute("user")) {
+                this.user = attributes.getString("user");
+            }
+            if (attributes.hasAttribute("password")) {
+                this.password = attributes.getString("password");
+            }
+
         }
         this.measuraments.add("table_name");
         this.measuraments.add("time_org");

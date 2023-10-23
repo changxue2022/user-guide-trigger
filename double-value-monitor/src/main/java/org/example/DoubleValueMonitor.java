@@ -26,6 +26,8 @@ public class DoubleValueMonitor implements Trigger {
 
     private Session session;
     private String iotdbHost;
+    private String user = "root";
+    private String password = "root";
     private String targetDevice = "root.ln.alerting";
     private Double lowLevel = 50.0;
     private Double highLevel = 100.0;
@@ -51,7 +53,12 @@ public class DoubleValueMonitor implements Trigger {
             if (attributes.hasAttribute("hi")) {
                 this.highLevel = Double.parseDouble(attributes.getString("hi"));
             }
-
+            if (attributes.hasAttribute("user")) {
+                this.user = attributes.getString("user");
+            }
+            if (attributes.hasAttribute("password")) {
+                this.password = attributes.getString("password");
+            }
         }
         this.measuraments.add("table_name");
         this.measuraments.add("alert_content");
@@ -70,6 +77,8 @@ public class DoubleValueMonitor implements Trigger {
         if (session == null ) {
             session = new Session.Builder()
                     .host(iotdbHost)
+                    .username(user)
+                    .password(password)
                     .build();
             session.open(false);
         }
@@ -77,7 +86,7 @@ public class DoubleValueMonitor implements Trigger {
     @Override
     public boolean fire(Tablet tablet) throws Exception {
         ensureSession();
-        LOGGER.info("############# trigger fire ############");
+//        LOGGER.info("############# trigger fire ############");
         List<MeasurementSchema> measurementSchemaList = tablet.getSchemas();
         for (int col = 0, n = measurementSchemaList.size(); col < n; col++) {
             if (measurementSchemaList.get(col).getType().equals(TSDataType.DOUBLE)) {
@@ -91,14 +100,15 @@ public class DoubleValueMonitor implements Trigger {
     }
     private synchronized void writeOut(int row, int col, Tablet tablet) throws IoTDBConnectionException, StatementExecutionException {
         double value = ((double[]) tablet.values[col])[row];
+//        LOGGER.info("***************"+value);
         if (value > this.highLevel) {
-            LOGGER.info("********* greater than higher value ********" + this.highLevel);
+//            LOGGER.info(value+"********* greater than higher value ********" + this.highLevel);
             this.content.add(tablet.deviceId);
             this.content.add("[" + tablet.timestamps[row] + "] CRITICAL [" + tablet.getSchemas().get(col).getMeasurementId() + "]: " + value + " greater then " + this.highLevel);
             this.session.insertAlignedRecord(this.targetDevice, new Date().getTime(), measuraments, tsDataTypes, content);
             this.content.clear();
         } else if (value > lowLevel) {
-            LOGGER.info("********* greater than lower value ********" + this.lowLevel);
+//            LOGGER.info(value+"********* greater than lower value ********" + this.lowLevel);
             this.content.add(tablet.deviceId);
             this.content.add("[" + tablet.timestamps[row] + "] WARN [" + tablet.getSchemas().get(col).getMeasurementId() + "]: " + value + " greater then " + this.lowLevel);
             this.session.insertAlignedRecord(this.targetDevice, new Date().getTime(), measuraments, tsDataTypes, content);

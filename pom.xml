@@ -7,7 +7,7 @@
     <groupId>org.example</groupId>
     <artifactId>user-guide-trigger</artifactId>
     <packaging>pom</packaging>
-    <version>0.14-SNAPSHOT</version>
+    <version>1.2.0-SNAPSHOT</version>
     <modules>
         <module>double-value-monitor</module>
         <module>multi-type-trigger</module>
@@ -15,6 +15,8 @@
         <module>strategy-test</module>
         <module>stateful-test-for-http</module>
         <module>client-support</module>
+        <module>perf-trigger</module>
+        <module>mqtt</module>
     </modules>
 
     <properties>
@@ -27,10 +29,22 @@
         <dependency>
             <groupId>org.apache.iotdb</groupId>
             <artifactId>iotdb-server</artifactId>
-            <version>0.14.0-SNAPSHOT</version>
+            <version>1.3.0-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.iotdb</groupId>
+            <artifactId>iotdb-session</artifactId>
+            <version>1.3.0-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.fusesource.mqtt-client/mqtt-client -->
+        <dependency>
+            <groupId>org.fusesource.mqtt-client</groupId>
+            <artifactId>mqtt-client</artifactId>
+            <version>1.16</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

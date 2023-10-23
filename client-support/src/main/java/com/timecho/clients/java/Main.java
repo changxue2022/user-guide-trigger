@@ -35,7 +35,7 @@ class SessionClientRunnable implements Runnable {
     private String host;
     private long timestamp;
     // 写入行数
-    private int maxCount = 2000000;
+    private int maxCount = 200;
 
     public SessionClientRunnable(String host, long timestamp){
         this.host = host;
