@@ -5,30 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ccaede7b-124a-41cb-8c44-f1c77cef95d4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/mqtt/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mqtt/src/main/java/org/apache/iotdb/db/protocol/mqtt/CustomizedJsonPayloadFormatter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mqtt/src/main/java/org/apache/iotdb/db/protocol/mqtt/PayloadJson.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mqtt/src/main/resources/META-INF/services/org.apache.iotdb.db.protocol.mqtt.PayloadFormatter" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/perf-trigger/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/perf-trigger/src/main/java/TriggerTestPerf.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client-support/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client-support/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-support/src/main/java/com/timecho/clients/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/client-support/src/main/java/com/timecho/clients/java/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-support/src/main/java/com/timecho/clients/jdbc/JDBCClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/client-support/src/main/java/com/timecho/clients/jdbc/JDBCClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-support/src/main/java/com/timecho/clients/mqtt/MqttClients.java" beforeDir="false" afterPath="$PROJECT_DIR$/client-support/src/main/java/com/timecho/clients/mqtt/MqttClients.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-support/src/main/java/com/timecho/clients/rest/RESTClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/client-support/src/main/java/com/timecho/clients/rest/RESTClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/double-value-monitor/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/double-value-monitor/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/double-value-monitor/src/main/java/org/example/DoubleValueMonitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/double-value-monitor/src/main/java/org/example/DoubleValueMonitor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/double-value-monitor/src/main/java/org/example/DoubleValueSimpleMonitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/double-value-monitor/src/main/java/org/example/DoubleValueSimpleMonitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/multi-type-trigger/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/multi-type-trigger/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mqtt/src/main/java/org/apache/iotdb/db/protocol/mqtt/CustomizedJsonPayloadFormatter.java" beforeDir="false" afterPath="$PROJECT_DIR$/mqtt/src/main/java/org/apache/iotdb/db/protocol/mqtt/CustomizedJsonPayloadFormatter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/multi-type-trigger/src/main/java/TriggerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/multi-type-trigger/src/main/java/TriggerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/perf-trigger/src/main/java/TriggerTestPerf.java" beforeDir="false" afterPath="$PROJECT_DIR$/perf-trigger/src/main/java/TriggerTestPerf.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stateful-test-for-http/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/stateful-test-for-http/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stateful-test-for-http/src/main/java/org/stateful/test/http/StatefulTriggerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/stateful-test-for-http/src/main/java/org/stateful/test/http/StatefulTriggerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stateful-test/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/stateful-test/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stateful-test/src/main/java/com/abc/trigger/stateful/test/StatefulTriggerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/stateful-test/src/main/java/com/abc/trigger/stateful/test/StatefulTriggerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/strategy-test/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/strategy-test/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/strategy-test/src/main/java/com/timecho/test/EmptyTrigger.java" beforeDir="false" afterPath="$PROJECT_DIR$/strategy-test/src/main/java/com/timecho/test/EmptyTrigger.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

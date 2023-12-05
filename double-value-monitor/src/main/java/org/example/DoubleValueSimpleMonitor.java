@@ -5,6 +5,7 @@ import org.apache.iotdb.rpc.StatementExecutionException;
 import org.apache.iotdb.session.Session;
 import org.apache.iotdb.trigger.api.Trigger;
 import org.apache.iotdb.trigger.api.TriggerAttributes;
+
 import org.apache.iotdb.tsfile.file.metadata.enums.TSDataType;
 import org.apache.iotdb.tsfile.write.record.Tablet;
 import org.apache.iotdb.tsfile.write.schema.MeasurementSchema;
@@ -14,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * 监控某列值，写出大于standard
@@ -29,10 +31,10 @@ public class DoubleValueSimpleMonitor implements Trigger {
     private String password = "root";
     private String targetDevice = "root.ln.alerting";
     private Double standardValue = 50.0;
+    private AtomicLong timestamp = new AtomicLong(new Date().getTime());
 
     private List<String> measuraments = new ArrayList<>(2);
     private List<TSDataType> tsDataTypes = new ArrayList<>(2);
-    private List<Object> content = new ArrayList<>(2);
 
     private void ensureSession() throws IoTDBConnectionException {
         if (session == null ) {
@@ -100,11 +102,11 @@ public class DoubleValueSimpleMonitor implements Trigger {
     private synchronized void writeOut(int row, int col, Tablet tablet) throws IoTDBConnectionException, StatementExecutionException {
         double value = ((double[]) tablet.values[col])[row];
         if (value > this.standardValue) {
-            this.content.add(tablet.deviceId + "." + tablet.getSchemas().get(col).getMeasurementId());
-            this.content.add(tablet.timestamps[row]);
-            this.content.add(value);
-            this.session.insertAlignedRecord(this.targetDevice, new Date().getTime(), measuraments, tsDataTypes, content);
-            this.content.clear();
+            List<Object> content = new ArrayList<>(2);
+            content.add(tablet.deviceId + "." + tablet.getSchemas().get(col).getMeasurementId());
+            content.add(tablet.timestamps[row]);
+            content.add(value);
+            this.session.insertAlignedRecord(this.targetDevice, timestamp.addAndGet(2), measuraments, tsDataTypes, content);
         }
     }
 }

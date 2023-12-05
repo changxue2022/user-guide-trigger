@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * 对于各种类型监控：
@@ -29,6 +30,7 @@ public class TriggerTest implements Trigger {
   private static final Logger LOGGER = LoggerFactory.getLogger(TriggerTest.class);
 
   private static final String TARGET_DEVICE = "root.target.alerting";
+  private AtomicLong timestamp = new AtomicLong(new Date().getTime());
   private String remote_ip;
   private String user = "root";
   private String password = "root";
@@ -38,7 +40,6 @@ public class TriggerTest implements Trigger {
   private Session session;
   private List<String> measuraments = new ArrayList<>(4);
   private List<TSDataType> tsDataTypes = new ArrayList<>(4);
-  private List<Object> content = new ArrayList<>(4);
 
   @Override
   public void onCreate(TriggerAttributes attributes) throws Exception {
@@ -159,35 +160,35 @@ public class TriggerTest implements Trigger {
   }
     private synchronized void writeOut(Tablet tablet, int col, int row, double value) throws IoTDBConnectionException, StatementExecutionException {
       if ( value > this.standardValue) {
+          List<Object> content = new ArrayList<>(2);
           LOGGER.info("[{}], {}, {}", tablet.timestamps[row], value, tablet.getSchemas().get(col).getMeasurementId());
-          this.content.add(trig_name);
-          this.content.add(tablet.deviceId + "." + tablet.getSchemas().get(col).getMeasurementId());
-          this.content.add(ts_type);
-          this.content.add("[" + tablet.timestamps[row] + "]" + value);
-          this.session.insertAlignedRecord(TARGET_DEVICE, new Date().getTime(), measuraments, tsDataTypes, content);
-          this.content.clear();
+          content.add(trig_name);
+          content.add(tablet.deviceId + "." + tablet.getSchemas().get(col).getMeasurementId());
+          content.add(ts_type);
+          content.add("[" + tablet.timestamps[row] + "]" + value);
+          this.session.insertAlignedRecord(TARGET_DEVICE, timestamp.addAndGet(2), measuraments, tsDataTypes, content);
       }
     }
     private synchronized void writeOut(Tablet tablet, int col, int row, boolean value) throws IoTDBConnectionException, StatementExecutionException {
       if (!value) {
+          List<Object> content = new ArrayList<>(2);
           LOGGER.info("[{}], {}, {}", tablet.timestamps[row], value, tablet.getSchemas().get(col).getMeasurementId());
-          this.content.add(trig_name);
-          this.content.add(tablet.deviceId + "." + tablet.getSchemas().get(col).getMeasurementId());
-          this.content.add(ts_type);
-          this.content.add("[" + tablet.timestamps[row] + "]" + value);
-          this.session.insertAlignedRecord(TARGET_DEVICE, new Date().getTime(), measuraments, tsDataTypes, content);
-          this.content.clear();
+          content.add(trig_name);
+          content.add(tablet.deviceId + "." + tablet.getSchemas().get(col).getMeasurementId());
+          content.add(ts_type);
+          content.add("[" + tablet.timestamps[row] + "]" + value);
+          this.session.insertAlignedRecord(TARGET_DEVICE, timestamp.addAndGet(3), measuraments, tsDataTypes, content);
       }
     }
     private synchronized void writeOut(Tablet tablet, int col, int row, String value) throws IoTDBConnectionException, StatementExecutionException {
       if (value.length() > 10) {
+          List<Object> content = new ArrayList<>(2);
           LOGGER.info("[{}], {}, {}", tablet.timestamps[row], value, tablet.getSchemas().get(col).getMeasurementId());
-          this.content.add(trig_name);
-          this.content.add(tablet.deviceId + "." + tablet.getSchemas().get(col).getMeasurementId());
-          this.content.add(ts_type);
-          this.content.add("[" + tablet.timestamps[row] + "]" + value);
-          this.session.insertAlignedRecord(TARGET_DEVICE, new Date().getTime(), measuraments, tsDataTypes, content);
-          this.content.clear();
+          content.add(trig_name);
+          content.add(tablet.deviceId + "." + tablet.getSchemas().get(col).getMeasurementId());
+          content.add(ts_type);
+          content.add("[" + tablet.timestamps[row] + "]" + value);
+          this.session.insertAlignedRecord(TARGET_DEVICE, timestamp.addAndGet(4), measuraments, tsDataTypes, content);
       }
     }
 

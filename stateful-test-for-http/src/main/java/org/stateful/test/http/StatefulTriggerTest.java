@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * 统计超过某个值的次数.不能监控多列，只能一列
@@ -24,6 +25,8 @@ public class StatefulTriggerTest implements Trigger {
 
     private static final String TARGET_DEVICE = "root.target.alerting.stateful";
     private Session session;
+    private AtomicLong timestamp = new AtomicLong(new Date().getTime());
+
     // key value
     private final AtomicInteger resultCount = new AtomicInteger(0);
     private final AtomicInteger indexCount = new AtomicInteger(0);
@@ -33,11 +36,10 @@ public class StatefulTriggerTest implements Trigger {
     private String tsType;
     private String trigName;
     private String iotdbHost;
-    private String user;
-    private String password;
+    private String user = "root";
+    private String password = "root";
     private List<String> measuraments = new ArrayList<>(4);
     private List<TSDataType> tsDataTypes = new ArrayList<>(4);
-    private List<Object> content = new ArrayList<>(4);
 
     private void ensureSession() throws IoTDBConnectionException {
         if (session == null ) {
@@ -90,6 +92,7 @@ public class StatefulTriggerTest implements Trigger {
         ensureSession();
         LOGGER.info("############# "+this.trigName +" fire ############");
         List<MeasurementSchema> measurementSchemaList = tablet.getSchemas();
+        List<Object> content = new ArrayList<>(2);
         for (int i = 0, n = measurementSchemaList.size(); i < n; i++) {
             switch (tsType) {
                 case "double":
@@ -98,12 +101,12 @@ public class StatefulTriggerTest implements Trigger {
                         double[] values = (double[]) tablet.values[i];
                         for (double value : values) {
                             if (indexCount.incrementAndGet() % windownSize == 0) {
-                                this.content.add(trigName);
-                                this.content.add(tablet.deviceId+"."+tablet.getSchemas().get(i).getMeasurementId());
-                                this.content.add(tsType);
-                                this.content.add(resultCount.toString());
-                                this.session.insertAlignedRecord(TARGET_DEVICE, new Date().getTime(), measuraments, tsDataTypes, content);
-                                this.content.clear();
+                                content.add(trigName);
+                                content.add(tablet.deviceId+"."+tablet.getSchemas().get(i).getMeasurementId());
+                                content.add(tsType);
+                                content.add(resultCount.toString());
+                                this.session.insertAlignedRecord(TARGET_DEVICE, timestamp.addAndGet(2), measuraments, tsDataTypes, content);
+                                content.clear();
                                 resultCount.set(0);
                             }
                             if (value > Double.parseDouble(this.standardValue)) {
@@ -118,12 +121,12 @@ public class StatefulTriggerTest implements Trigger {
                         int[] values = (int[]) tablet.values[i];
                         for (int value : values) {
                             if (indexCount.incrementAndGet() % windownSize == 0) {
-                                this.content.add(trigName);
-                                this.content.add(tablet.deviceId+"."+tablet.getSchemas().get(i).getMeasurementId());
-                                this.content.add(tsType);
-                                this.content.add(resultCount.toString());
-                                this.session.insertAlignedRecord(TARGET_DEVICE, new Date().getTime(), measuraments, tsDataTypes, content);
-                                this.content.clear();
+                                content.add(trigName);
+                                content.add(tablet.deviceId+"."+tablet.getSchemas().get(i).getMeasurementId());
+                                content.add(tsType);
+                                content.add(resultCount.toString());
+                                this.session.insertAlignedRecord(TARGET_DEVICE, timestamp.addAndGet(2), measuraments, tsDataTypes, content);
+                                content.clear();
                                 resultCount.set(0);
                             }
                             if (value > Integer.parseInt(standardValue) ) {
@@ -138,12 +141,12 @@ public class StatefulTriggerTest implements Trigger {
                         long[] values = (long[]) tablet.values[i];
                         for (long value : values) {
                             if (indexCount.incrementAndGet() % windownSize == 0) {
-                                this.content.add(trigName);
-                                this.content.add(tablet.deviceId+"."+tablet.getSchemas().get(i).getMeasurementId());
-                                this.content.add(tsType);
-                                this.content.add(resultCount.toString());
-                                this.session.insertAlignedRecord(TARGET_DEVICE, new Date().getTime(), measuraments, tsDataTypes, content);
-                                this.content.clear();
+                                content.add(trigName);
+                                content.add(tablet.deviceId+"."+tablet.getSchemas().get(i).getMeasurementId());
+                                content.add(tsType);
+                                content.add(resultCount.toString());
+                                this.session.insertAlignedRecord(TARGET_DEVICE, timestamp.addAndGet(2), measuraments, tsDataTypes, content);
+                                content.clear();
                                 resultCount.set(0);
                             }
                             if (value > Long.parseLong(standardValue) ) {
@@ -158,12 +161,12 @@ public class StatefulTriggerTest implements Trigger {
                         float[] values = (float[]) tablet.values[i];
                         for (float value : values) {
                             if (indexCount.incrementAndGet() % windownSize == 0) {
-                                this.content.add(trigName);
-                                this.content.add(tablet.deviceId+"."+tablet.getSchemas().get(i).getMeasurementId());
-                                this.content.add(tsType);
-                                this.content.add(resultCount.toString());
-                                this.session.insertAlignedRecord(TARGET_DEVICE, new Date().getTime(), measuraments, tsDataTypes, content);
-                                this.content.clear();
+                                content.add(trigName);
+                                content.add(tablet.deviceId+"."+tablet.getSchemas().get(i).getMeasurementId());
+                                content.add(tsType);
+                                content.add(resultCount.toString());
+                                this.session.insertAlignedRecord(TARGET_DEVICE, timestamp.addAndGet(2), measuraments, tsDataTypes, content);
+                                content.clear();
                                 resultCount.set(0);
                             }
                             if (value > Float.parseFloat(standardValue) ) {
@@ -178,12 +181,12 @@ public class StatefulTriggerTest implements Trigger {
                         boolean[] values = (boolean[]) tablet.values[i];
                         for (boolean value : values) {
                             if (indexCount.incrementAndGet() % windownSize == 0) {
-                                this.content.add(trigName);
-                                this.content.add(tablet.deviceId+"."+tablet.getSchemas().get(i).getMeasurementId());
-                                this.content.add(tsType);
-                                this.content.add(resultCount.toString());
-                                this.session.insertAlignedRecord(TARGET_DEVICE, new Date().getTime(), measuraments, tsDataTypes, content);
-                                this.content.clear();
+                                content.add(trigName);
+                                content.add(tablet.deviceId+"."+tablet.getSchemas().get(i).getMeasurementId());
+                                content.add(tsType);
+                                content.add(resultCount.toString());
+                                this.session.insertAlignedRecord(TARGET_DEVICE, timestamp.addAndGet(2), measuraments, tsDataTypes, content);
+                                content.clear();
                                 resultCount.set(0);
                             }
                             if (value == Boolean.parseBoolean(standardValue) ) {
@@ -198,12 +201,12 @@ public class StatefulTriggerTest implements Trigger {
                         Binary[] values = (Binary[]) tablet.values[i];
                         for (Binary value : values) {
                             if (indexCount.incrementAndGet() % windownSize == 0) {
-                                this.content.add(trigName);
-                                this.content.add(tablet.deviceId+"."+tablet.getSchemas().get(i).getMeasurementId());
-                                this.content.add(tsType);
-                                this.content.add(resultCount.toString());
-                                this.session.insertAlignedRecord(TARGET_DEVICE, new Date().getTime(), measuraments, tsDataTypes, content);
-                                this.content.clear();
+                                content.add(trigName);
+                                content.add(tablet.deviceId+"."+tablet.getSchemas().get(i).getMeasurementId());
+                                content.add(tsType);
+                                content.add(resultCount.toString());
+                                this.session.insertAlignedRecord(TARGET_DEVICE, timestamp.addAndGet(2), measuraments, tsDataTypes, content);
+                                content.clear();
                                 resultCount.set(0);
                             }
                             if (value.toString().equals(standardValue) ) {

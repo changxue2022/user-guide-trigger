@@ -3,6 +3,7 @@ package org.example;
 import org.apache.iotdb.rpc.IoTDBConnectionException;
 import org.apache.iotdb.rpc.StatementExecutionException;
 import org.apache.iotdb.session.Session;
+
 import org.apache.iotdb.trigger.api.Trigger;
 import org.apache.iotdb.trigger.api.TriggerAttributes;
 import org.apache.iotdb.tsfile.file.metadata.enums.TSDataType;
@@ -11,10 +12,10 @@ import org.apache.iotdb.tsfile.write.schema.MeasurementSchema;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * 监控某列值，大于hi 的报Critical, 大于lo小于 hi 的报 Warn
@@ -32,9 +33,10 @@ public class DoubleValueMonitor implements Trigger {
     private Double lowLevel = 50.0;
     private Double highLevel = 100.0;
 
+    private AtomicLong timestamp = new AtomicLong(new Date().getTime());
+
     private List<String> measuraments = new ArrayList<>(2);
     private List<TSDataType> tsDataTypes = new ArrayList<>(2);
-    private List<Object> content = new ArrayList<>(2);
 
 
 
@@ -102,17 +104,17 @@ public class DoubleValueMonitor implements Trigger {
         double value = ((double[]) tablet.values[col])[row];
 //        LOGGER.info("***************"+value);
         if (value > this.highLevel) {
-//            LOGGER.info(value+"********* greater than higher value ********" + this.highLevel);
-            this.content.add(tablet.deviceId);
-            this.content.add("[" + tablet.timestamps[row] + "] CRITICAL [" + tablet.getSchemas().get(col).getMeasurementId() + "]: " + value + " greater then " + this.highLevel);
-            this.session.insertAlignedRecord(this.targetDevice, new Date().getTime(), measuraments, tsDataTypes, content);
-            this.content.clear();
+            List<Object> content = new ArrayList<>(2);
+//            LOGGER.info(value+"********* greater than higher value ********" + timestamp.get());
+            content.add(tablet.deviceId);
+            content.add("[" + tablet.timestamps[row] + "] CRITICAL [" + tablet.getSchemas().get(col).getMeasurementId() + "]: " + value + " greater then " + this.highLevel);
+            this.session.insertAlignedRecord(this.targetDevice, timestamp.addAndGet(3), measuraments, tsDataTypes, content);
         } else if (value > lowLevel) {
-//            LOGGER.info(value+"********* greater than lower value ********" + this.lowLevel);
-            this.content.add(tablet.deviceId);
-            this.content.add("[" + tablet.timestamps[row] + "] WARN [" + tablet.getSchemas().get(col).getMeasurementId() + "]: " + value + " greater then " + this.lowLevel);
-            this.session.insertAlignedRecord(this.targetDevice, new Date().getTime(), measuraments, tsDataTypes, content);
-            this.content.clear();
+            List<Object> content = new ArrayList<>(2);
+//            LOGGER.info(value+"********* greater than lower value ********" + timestamp.get());
+            content.add(tablet.deviceId);
+            content.add("[" + tablet.timestamps[row] + "] WARN [" + tablet.getSchemas().get(col).getMeasurementId() + "]: " + value + " greater then " + this.lowLevel);
+            this.session.insertAlignedRecord(this.targetDevice, timestamp.addAndGet(2), measuraments, tsDataTypes, content);
         }
     }
 
